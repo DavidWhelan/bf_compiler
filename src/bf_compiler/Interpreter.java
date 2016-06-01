@@ -16,7 +16,6 @@ public class Interpreter
 		{
 			System.out.print("BF>");
 			String command = input.nextLine();
-			
 			int tracker = 0;
 			for(int i = 0; i<command.length(); i++)
 			{
@@ -39,29 +38,45 @@ public class Interpreter
 				int missing = tracker/-1;
 				System.out.println("You are missing "+missing+" [");
 			}
-			
-			for(int i = 0; i<command.length(); i++)
+			int i = 0;
+			while(i<command.length())
 			{
 				char currentChar = command.charAt(i);
 				switch(currentChar)
 				{
 					case '>':
+						pointer++;
+						if(pointer == 30000)
+						{
+							pointer = 0;
+						}
 						break;
 					case '<':
+						pointer--;
+						if(pointer<0)
+						{
+							pointer = 30000;
+						}
 						break;
 					case '+':
+						tape[pointer]++;
 						break;
 					case '-':
+						tape[pointer]--;
 						break;
 					case '.':
+						System.out.println("OUT>" + tape[pointer]);
 						break;
 					case ',':
+						System.out.print("BYTE>");
+						tape[pointer] = Integer.parseInt(input.nextLine());
 						break;
 					case '[':
 						break;
 					case ']':
 						break;
 				}
+				i++;
 			}
 			
 		}
